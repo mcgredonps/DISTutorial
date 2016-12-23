@@ -35,11 +35,11 @@ As is inevitable with these things, the standard has to be maintained and update
 
 ## References
 
-Simulation Interoperabilty Standards Organization (SISO): http://sisostds.org/
-The IEEE DIS Standard, 1998 (Version 6): https://standards.ieee.org/findstds/standard/1278.1a-1998.html
-DIS Wikipedia: https://en.wikipedia.org/wiki/Distributed_Interactive_Simulation
-DIS Plain and Simple, another document that provides information about DIS: https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=29302
-SIMNET wikipedia: https://en.wikipedia.org/wiki/SIMNET
-SIMNET History: http://www.iitsec.org/about/awardsandrecognition/Documents/2015_FellowPaper_Miller.pdf
-Still More SIMNET History: http://www.dtic.mil/dtic/tr/fulltext/u2/a294786.pdf
-A whole website devoted to SIMNET history: http://simnet-history.org/
+**Simulation Interoperabilty Standards Organization (SISO):** http://sisostds.org/<br>
+**The IEEE DIS Standard, 1998 (Version 6):** https://standards.ieee.org/findstds/standard/1278.1a-1998.html<br>
+**DIS Wikipedia:** https://en.wikipedia.org/wiki/Distributed_Interactive_Simulation<br>
+**DIS Plain and Simple, another document that provides information about DIS:** https://www.sisostds.org/DigitalLibrary.aspx?Command=Core_Download&EntryId=29302<br>
+**SIMNET wikipedia:** https://en.wikipedia.org/wiki/SIMNET<br>
+**SIMNET History:** http://www.iitsec.org/about/awardsandrecognition/Documents/2015_FellowPaper_Miller.pdf<br>
+**Still More SIMNET History:** http://www.dtic.mil/dtic/tr/fulltext/u2/a294786.pdf<br>
+**A whole website devoted to SIMNET history:** http://simnet-history.org/<br>
