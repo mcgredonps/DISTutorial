@@ -1,4 +1,4 @@
-#Distributed Interactive Simulation: A Primer
+#Distributed Interactive Simulation: The Missing Manual
 
 1. Intro
    - DIS Background
@@ -14,6 +14,7 @@
       - Situational awareness: maps
       - Simulation interoperability
       - Virtual Worlds
+      - Analysis: Recording and Playback
    - Virtual World Issues
    		- Networks
    		- Latency
@@ -30,7 +31,6 @@
    - Intercom: Voice Communications
    - Electronic Warfare
 6. Technology
-   - Broadcast/Multicast
    - Web
       - Websockets
       - WebRTC
