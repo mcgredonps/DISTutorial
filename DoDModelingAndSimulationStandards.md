@@ -55,6 +55,17 @@ TENA also provides a repository of reusable TENA objects at its web site.
 
 TENA has not been approved by a standards organization, and the current implementation is not open source. TENA is organized by the United States Office of the Secretary of Defense Test Resource Management Center (TRMC). The TENA Middleware, which implments the basic plumbing of TENA, is freely available for download from the TENA-sda.org site with a login. Free (though not necessarily standardized or open source) software was important to the range community. It was felt that licences and the problems inherent with keeping them current did not work well with the very long and often convoluted product life cycles seen in the DoD range environment. TENA sidestepped the license problem by simply giving away the software.
 
+
+## What is Standardized?
+
+The three main DoD M&S networking standards decided to focus on different places in the software stack to enforce standard behavior.
+
+DIS choose to standardize the format of messages on the wire, and not the API. This makes it easier for implementations from different vendors to work together. The tradeoff is that vendors can, and do, use any API they like to create those messages. The drawback is that changing from one DIS vendor to another can be traumatic. Every piece of code that touches the DIS library API has to be changed to meet the  API of the new vendor.
+
+HLA choose to standardize the HLA API, but not to standardize the format of messages on the wire. This makes getting simulations using different RTI vendors to exchange messages hard, but changing vendors easy, at least in theory. Considerable work was done with HLA to make using a new RTI vendor as easy as swapping in a new DLL. The reality can be a little grimmer. Simulations with that significant of a change may need to be re-certified to ensure that no unexpected changes crop up. There's another axis of incompatibility in the version of HLA being used--HLA 1.3 and IEEE-1516-2010 use somewhat different APIs. Finally, the simulations may be incompatible at the FOM level. Simply saying that two simulations both use HLA does not mean they are compatible.
+
+Finally, TENA also implemented an API standard, and remained silent on the wire format for exchanging messages. It is none of the programmers business what goes on below the API level, and they should have no knowlege of what the wire format is. The situation is not quite as bad as HLA, however, since there is only one offical vendor of the HLA middleware. The wire format problem was sidestepped by limiting the number of vendors to one.
+
 ## Comparision of Standards
 
 So, which to use? It depends.
