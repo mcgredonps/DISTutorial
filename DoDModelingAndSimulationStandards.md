@@ -19,18 +19,58 @@ What's implicit in this message is that both the sender and receiver are using t
 
 Not all message exchanges consist of simple state updates. For example simulating shooting requires that multiple messages be exchanged between the shooter and target. The sequence in which the messages must be exchanged to accomplish this are also specified by the DIS standard.
 
+Many simulations using DIS only partially implement the standard. If a simulation makes no use of electromagnetic warfare PDUs then many applications will simply not implement them. This means that they will be deaf to any of these PDUs sent by other simulations.
+
 ##HLA
 
-DIS was intended to address a particular problem domain: real-time virtual environments. But the DoD has broader simulation problems to solve that DIS can't address. As a result, starting in 1995, the DoD started the process of creating a new standard for modeling and simulation, which eventually evolved into HLA.
+DIS was intended to address a particular problem domain: real-time virtual environments. However the DoD has broader simulation problems to solve that DIS can't address. The M&S leadership wanted a single standard that could be used across a wider range of simulation applications. As a result, starting in 1995, the DoD started the process of creating a new standard for modeling and simulation, an effort which eventually evolved into the HLA standard.
 
-HLA encompasses a broader set of tools that can be brought to M&S applications. DIS works in real time, AKA wall clock time. This works well for DIS simulations, where it is usually expected that there will be humans in the simulation loop, and a simulation should move no faster or slower than what a human would experience in real time. But some simulations may need to run faster or slower than real time. HLA may optionally make use of a simulation clock that can diverge from real time. Also, the DIS PDUs define a collection of state information. State information not included in the DIS standard is more difficult to define. HLA allows more  
+HLA brings a broader set of tools that can be applied to M&S applications. DIS works in real time, AKA wall clock time. This works well for DIS simulations, where it is usually expected that there will be humans in the simulation loop, and a simulation should move no faster or slower than what a human would experience in real time. But some simulations may need to diverge from real time. HLA may optionally make use of a simulation clock that can differ from real time. Also, the DIS PDUs define a collection of state information. State information not included in the DIS standard is more difficult to exchange. HLA applications can specify the  state information that the interoperating applications exchange. 
 
+While DIS specifies the format of data on the wire, HLA is an API standard. The standard specifies a set of function calls that simulations can use, along with a set of ten "HLA rules" that compliant applications must follow. The state information to be exchanged is outside of the standard and defined by each application in something called a "Federation Object Model" (FOM).  For two simulations to interact they must share a FOM. 
 
-While DIS specifies the format of data on the wire, HLA is an API standard. The standard specifies a set of function calls that simulations can use. 
+There has been some work done to standardize FOMs, most notably in the Real-Time Reference Platform FOM (RPR-FOM). When HLA was first introduced there was already a large installed base of distributed virtual simulations. To make the planned transition to HLA easier, RPR-FOM replicated much of the semantics of DIS. The same coordinate system was used, and the same semantics for identifying entities, dead reckoning algorithms, and more. A firm understanding of DIS semantics will go far in helping you work with HLA RPR-FOM applications. 
+
+The interface that programmers use to interact with HLA is called the RTI (Run-Time Infrastructure). Simulation authors can choose to buy an RTI to use for their application or use a free or open source RTI. The Modeling and Simulation Coordination Office (MSCO) maintains a suite of tests that can be applied to RTIs that can flag any noncompliance with the standard. 
+
+While HLA standardizes the API, the standard is silent about the format of messages exchanged between host RTIs on the network. An RTI implementor can choose to use any format he likes.  This means that two simulations, both using HLA, and both using RPR-FOM, but using RTIs from different vendors cannot directly communicate with each other because they are using different network message formats. The thinking is that HLA, because it has a standard API, makes it easy to switch between RTI vendors, so a standard wire format was less important. This also allows RTI vendors to innovate under the API with a number of technologies.
+
+The HLA standard has gone through a number of revisions over the years. The first published standard, from the Defense Modeling and Simulation Office, was made available in 1998 has HLA 1.3. Subsequent versions were promulgated through SISO and, eventually, IEEE. The first IEEE-promulgated standard was IEEE-1516. HLA was adopted by NATO as STANAG-4603. HLA was further updated in 2010 in an updated IEEE standard, IEEE-1516-2010. As of this writing this is the latest version.
+
 
 
 ## TENA
 
+TENA was developed to serve the needs of the live range community. DIS uses a fixed set of messages to exchange state information. HLA uses an API. TENA adopted a remote objects architecture. While DIS and HLA can exchange state information, TENA adds the ability to reuse code.
+
+Users of Common Object Request Broker Architecture (CORBA) will be immediately at home in TENA. The basic concept is that developers write classic language objects, as seen in C++ or Java. These objects can be published by applications and accessed remotely via *proxies*, or stand-ins for the actual object. 
+
+Suppose we have an object representing a tank in one participating simulation. Other simulation participants can call methods in that object, called *servant*, via a proxy on their own host. The proxy has the same interface as the servant--the set of publicly accessible methods--as the object on the original simulation. When a local application calls a method in the proxy, perhaps including some arguments with the method call, the proxy does no actual computation itself. Instead it packages up the method call, including any arguments, and sends it across the network to the host with the servant. That host runs the code in the servant object's method, then returns the result to the calling proxy. 
+
+From the standpoint of the caller, it looks as if the user is directly calling a method on an object residing on another host.
+
+HLA and DIS pass state information between cooperating hosts. TENA provides the ability to access code running on remote hosts as well. It can be programmer-friendly as well. Most coders are familiar with the idea of calling methods, and TENA and CORBA make that work in a familiar environment. 
+
+TENA also provides a repository of reusable TENA objects at its web site.
+
+TENA has not been approved by a standards organization, and the current implementation is not open source. TENA is organized by the United States Office of the Secretary of Defense Test Resource Management Center (TRMC). The TENA Middleware, which implments the basic plumbing of TENA, is freely available for download from the TENA-sda.org site with a login. Free (though not necessarily standardized or open source) software was important to the range community. It was felt that licences and the problems inherent with keeping them current did not work well with the very long and often convoluted product life cycles seen in the DoD range environment. TENA sidestepped the license problem by simply giving away the software.
+
 ## Comparision of Standards
 
-##
+So, which to use? It depends.
+
+DIS standardizes the format of messages on the wire. Any mechanism that creates messages in the desired format is fair game. In contrast HLA is an API standard. That means that the standard is language-specific. There are HLA APIs specified for C++ and Java, and for FORTRAN and ADA in HLA 1.3. If you want to use another language there's no official option. 
+
+In the last decade scripting languages like Python and Javascript have become quite popular, either for writing applications in their own right or because they can act as "glue" for making applications work together. Javascript in particular has become near-universal in web based environments, and Python has been used as a server-side "glue" language to connect applications. HLA's status as a language API is a handicap if you want to use scripting technology. Using DIS with Javascript in web applications, usually combined with websockets or WebRTC is very appealling. 3D standards such as WebGL enable 3D graphics in the web browser. There is a wealth of information to "mash-up" on the web, including maps and georeferenced data.
+
+Notice that while DIS specifies the format of messages on the network, HLA does not. HLA is an API specification, and those that implement HLA can pick any format for messages on the wire that they like. This means that RTIs from different vendors cannot directly communicate with each other without a gateway or bridge. The lack of a standard format for information on the network wire was, and is still, a controversial design choice. Getting two simulations to communicate requires either that all participants agree on an RTI from a single vendor, or that some sort of a gateway/bridge be used to connect the different RTI vendors.  There has also been some drift between FOMs. Not all deployed simulations use the bare RPR-FOM, and instead added some extra data to the FOM. This can make it difficult for N simulations, with partially differing RPR-FOM implementations, to work together within an HLA context. Two RTI vendors with slightly differing FOMs may be solved by reporgramming one or both the the simulations. A common solution is to connect simulations using HLA RPR-FOM variants from several 
+ 
+
+
+## Further Reading
+
+HLA Tutorial from Pitch: http://www.pitchtechnologies.com/hlatutorial/
+The TENA organization site, where users can register for a free download of the TENA middleware, and find more tutorials: http://tena-sda.org
+Python as a Glue Language: https://www.python.org/doc/essays/omg-darpa-mcc-position/
+DIS/RPR-FOM Protocol support group at SISO: https://www.sisostds.org/StandardsActivities/SupportGroups/DISRPRFOMPSG.aspx
+
