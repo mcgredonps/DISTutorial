@@ -16,6 +16,7 @@
       - Virtual Worlds
       - Analysis: Recording and Playback
    - Virtual World Issues
+   		- Coordinate Systems
    		- Networks
    		- Latency
    		- Coordinate Systems
