@@ -19,7 +19,6 @@
    		- Coordinate Systems
    		- Networks
    		- Latency
-   		- Coordinate Systems
    		- Semantics (Entity Type, etc)
    		- Identifiers
    		- Entity Discovery
