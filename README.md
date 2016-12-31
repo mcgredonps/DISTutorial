@@ -1,26 +1,26 @@
-#Distributed Interactive Simulation: The Missing Manual
+#Distributed Interactive Simulation: The Missing Handbook
 
-1. Intro
+1. <a href="DIS_Background.md">Intro</a>
    - DIS Background
    - DIS History
-2. DOD Modeling and Simulation Standards
+2. <a href="DoDModelingAndSimulationStandards.md">DOD Modeling and Simulation Standards</a>
 	- DIS
 	- HLA
 	- TENA
 	- What is standardized?
 	- Philosophy: partial implementations of DIS abound
-3. Live, Virutal, Constructive
+3. <a href="LiveVirtualConstructive.md">Live, Virutal, Constructive</a>
    - Example DIS applications
       - Situational awareness: maps
       - Simulation interoperability
       - Virtual Worlds
       - Analysis: Recording and Playback
-   - Virtual World Issues
+   - <a href="VirutalWorldIssues.md">Virtual World Issues</a>
    		- Coordinate Systems
-   		- Networks
+   		- <A href="EntityIdentifiers.md">Identifiers</a>
+   		- <a href="Networks.md">Networks</a>
    		- Latency
-   		- Semantics (Entity Type, etc)
-   		- Identifiers
+   		- <A href="EntityType.md">Semantics (Entity Type, etc)</a>
    		- Entity Discovery
    		- Scalability
    		- Dead Reckoning
