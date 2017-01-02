@@ -28,6 +28,7 @@
    		- <A href="Gateways.md">Gateways</a>
 4. <a href="DISImplementations.md">DIS Implementations</a>
 5. <a href="ExchangingStateInformation.md">PDUs: Exchanging State Information</a>
+	- <A href="UDPSockets.md">UDP Socket Programming</a>
 	- <a href="EntityStatePDUs.md">Sending State Updates with Entity State PDUs</a>
    - Combat: Fire and Detonation PDUs
    - Intercom: Voice Communications
