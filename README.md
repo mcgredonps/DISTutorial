@@ -24,6 +24,7 @@
    		- Entity Discovery
    		- Scalability
    		- Dead Reckoning
+   		- <A href="Gateways.md">Gateways</a>
 4. DIS Implementations
 5. PDUs: Exchanging State Information
 	- Sending State Updates with Entity State PDUs

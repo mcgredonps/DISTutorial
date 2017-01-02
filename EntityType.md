@@ -69,21 +69,12 @@ Sometimes simulation authors simply make up the enumerated values for entity and
 
 ###Gateways
 
-To address these issues in a practical way "gateways" have become a popular tool. A gateway sits between simulations, reading PDUs from one, examines the entity type records, and changes them on the fly before forwarding them to another simulation. Suppose simulation A is generating M1A1 Abrams tanks, but simulation B was written in such a way that it only handles M1A2 tanks. Can we make the two simulations interoperate?
+To address these issues in a practical way "gateways" have become a popular tool. See the "Gateways" section of this document.
 
-It depends. If simulation B is only worried about the visual appearance of the tanks it displays, we can insert a gateway between the two simulations. This gateway will read PDUs from simulation A, and examine them for fields that contain references to M1A1 tanks. Whenever it finds such a value, it will change it to an M1A2 tank and forward it on to simulationi B, where it will appear as an M1A2. No changes to the source code of the simulations is needed, and in fact we don't need the source code or need to change any configuration files of the two simulations at all. The gateway acts as a shim between the two simulations.
-
-On the other hand if the simulations depend on some intrinsic value of the tanks--such as the power of the M1A1's gun, or the effectiveness of its armor--we have other problems.
-
-(Pedants will at this point dispute the use of the term "gateway" for this application, and instead claim that what is being described here is a "bridge." Academics insist that gateways translate between protocols, while bridges translate within protocols, and DIS is being used by both simulations. The term "gateway" is embedded in practice, so stop trying to fight that battle in this problem domain.)
-
-Considerable work has been done on gateways. See Lutz & Co.  Some popular gateways include Joint Simulation Bus (JBUS) and AIME from NAVAIR. AIME is only somewhat incidentally a gateway. It's intent is to be a common API that hides the type of protocol being used, be it DIS or HLA. It just happens that it can be repurposed into a gateway.
 
 Further Reading
 
-SISO EBV document:
-SISO EBV committee:
-JHU Gateway documents:
-JBUS:
-AIME:
+SISO EBV document: <a href="https://www.sisostds.org/DesktopModules/Bring2mind/DMX/Download.aspx?Command=Core_Download&EntryId=42916&PortalId=0&TabId=105">EBV Document</a>. You can also retrieve the XML document.
+
+
 
