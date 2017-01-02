@@ -25,9 +25,9 @@
    		- Scalability
    		- Dead Reckoning
    		- <A href="Gateways.md">Gateways</a>
-4. DIS Implementations
-5. PDUs: Exchanging State Information
-	- Sending State Updates with Entity State PDUs
+4. <a href="DISImplementations.md">DIS Implementations</a>
+5. <a href="ExchangingStateInformation.md">PDUs: Exchanging State Information</a>
+	- <a href="EntityStatePDUs.md">Sending State Updates with Entity State PDUs</a>
    - Combat: Fire and Detonation PDUs
    - Intercom: Voice Communications
    - Electronic Warfare
