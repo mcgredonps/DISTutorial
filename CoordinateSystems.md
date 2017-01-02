@@ -1,11 +1,6 @@
-## Virutal World Issues in DIS
+### Coordinate Systems
 
-Implementing a virtual world is a tricky business. There are some basic theoretical problems and some DIS implementation specific issues. We'll discuss some of them here. 
-
-When examining the individual fields of the DIS PDUs, such as the location field, or the dead reckoning field, it's often useful to refer back to this section of the tutorial for more context.
-
-### Location
-
+#### Location
 DIS is mostly about the position of physical entities in the world. This points out an obvious and important basic question: what coordinate system are we using to describe locations?
 
 In the entertainment world games move entities in 3D, but the positions are usually not correlated with the real world. This concept does not work well in LVC applications, where the position of live entities needs to be integrated with simulated entities. For example integrating a live aircraft track with the position of simulated ships requires that they share a coordinate system.
@@ -32,7 +27,9 @@ In this example the position of a tank entity is described in several different 
 
 DIS simulations do all their local physics calculations in the local coordinate system. When the ESPDU is being prepared to be sent the position of the entity in the local coordinate system is transformed to the DIS global coordinate system, and then set in the ESPDU. When received by the simulation on the other side, that simulation translates from the global coordinate system to whatever its local coordinate system is.
 
-There are a few wrinkles in this. While the geocentric coordinate system is placed at the center of the earth, it does not by itself define where the surface of the earth is. There are actually several mathematical models for the shape of the earth. The most popular one is called WGS-84, which is also used in GPS. This defines an oblate spheroid. The earth is not smooth, and terrain can rise above or below the geoid, as with Mount Everest or the Dead Sea or the bottom of the Atlantic Ocean.
+There are a few wrinkles in this. While the geocentric coordinate system is placed at the center of the earth, it does not by itself define where the surface of the earth is. The earth is not a sphere, but rather a somewhat flattened egg-shaped surface. There are several mathematical models for the shape of the earth used in geodesy. The most popular one is called WGS-84, which is also used in GPS, but there are a disturbing number of other models in use that may crop up in older maps. 
+
+WGS-84 defines an oblate spheroid. The earth is not smooth, and terrain can rise above or below the geoid, as with Mount Everest or the Dead Sea or the bottom of the Atlantic Ocean.
 
 Terrain is itself a tricky problem and outside the scope (for now) of this document. Simulations need precise placement of objects, often to sub-meter accuracy. Getting agreement on this between simulations that use terrain information from different sources is very difficult. Most simulations hack this lack of accuracy by using *ground clamping*. If an entity such as a tank is described by a companion simulation as being a meter above the ground on the local simulation, the local simulation will simply force it to be drawn as in contact with the ground. This avoids the problem of "hover tanks" that appear to float above the terrain, an artifact that would undermine user confidence in the simulation.
 
@@ -41,6 +38,33 @@ There are several packages that convert between the coordinate systems discussed
 <a href="http://www.sedris.org/srm_desc.htm">Sedris SRM site</a>
 
 The SEDRIS site includes tutorials about the theory behind the process and for using the Java and C++ packages they provide.
+
+##### Shut up and give me the equation
+
+To convert latitude, longitude, and altitude to the DIS geocentric ("Earth-Centered, Earth Fixed") coordinate system:
+
+<img src="images/LatLonAltToECEF.jpg">
+
+Remember, angles are in radians here. Alpha is latitude, omega is the longitude, a is the semi-major axis of the WGS-84 specification, 6378137, and b, the semi-minor axis of WGS-84, is 6356752.3142.
+
+Converting from DIS coordinates to latitude, longitude, and altitude is a little tricker.
+
+First, longitude:
+<img src="images/LongitudeFromXYZ.jpg">
+
+Next, latitude. This can be done iteratively for better precision but one iteration gives about five decimal places of accuracy:
+
+<img src="images/LatitudeFromXYZ.jpg"/>
+
+Finally, altitude:
+<img src="images/AltitudeFromXYZ.jpg"/>
+
+#### Orientation
+If we can place an entity in the world, how do we know which way it's facing? In the case of DIS, the convention is to express entity location in terms of sequential rotations about coordinate axes. 
+
+The record expressing orientation has fields for psi, theta, and phi. These represent angles, expressed in radians, in the entity's coordinate system. First, rotate psi radians around the z-axis, then theta radians around the y-axis, and finally phi radians around the x-axis.
+
+The Austalian Defense Force has published a fine paper on the mathemtatics involved, including the use of quaternions to aid in computation. See the Kok paper below in "further readings."
 
 ### Further Reading
 
@@ -53,10 +77,6 @@ SRM Tutorial, hardcopy: <a href="http://www.sedris.org/stc/2000/tu/srm/tsld003.h
 DTIC manual for coordinate system transformations: <a href="http://www.dtic.mil/dtic/tr/fulltext/u2/a307127.pdf">DTIC Manaul</a><br>
 
 Coordinate System Transformation theory: <a href="http://www.springer.com/cda/content/document/cda_downloaddocument/9780857296344-c2.pdf?SGWID=0-0-45-1143141-p174116371">Book Chapter</a>
+
+"Using rotations to build aerospace coordinate systems", Kok: <a href="documents/UsingRotationsToBuildAerospaceCoordinateSystems.pdf">Australian Defence Force paper</a>
  
-
-
-
- 
-
-

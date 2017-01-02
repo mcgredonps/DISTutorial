@@ -16,7 +16,7 @@
       - Virtual Worlds
       - Analysis: Recording and Playback
    - <a href="VirutalWorldIssues.md">Virtual World Issues</a>
-   		- Coordinate Systems
+   		- <a href="CoordinateSystems.md">Coordinate Systems</a>
    		- <A href="EntityIdentifiers.md">Identifiers</a>
    		- <a href="Networks.md">Networks</a>
    		- Latency
